@@ -8,9 +8,9 @@ const App = () => {
   const [color, setColor] = useState('#626262');
   const [strokeWidth, setStrokeWidth] = useState(5);
 
-  const [viewerRef, onChange] = useRealtimeViewer();
+  const [viewerRef, onChange, { reset: resetViewer }] = useRealtimeViewer();
 
-  const [drawerRef, { reset }] = useRealtimeDrawer({
+  const [drawerRef, { reset: resetDrawer }] = useRealtimeDrawer({
     color,
     strokeWidth,
     onChange,
@@ -44,7 +44,14 @@ const App = () => {
         </div>
       </div>
       <div>
-        <button onClick={reset}>Reset</button>
+        <button
+          onClick={() => {
+            resetDrawer();
+            resetViewer();
+          }}
+        >
+          Reset
+        </button>
       </div>
       <div>
         <div style={{ height: 512, width: 512 }}>

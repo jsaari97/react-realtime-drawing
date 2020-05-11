@@ -20,16 +20,23 @@ interface RealtimeDrawerOptions {
   onChange?: onChangeMethod;
 }
 
-interface RealtimeDrawerHookOptions {
+interface RealtimeCommonHookOptions {
   reset: () => void;
 }
+
+interface RealtimeDrawerHookOptions extends RealtimeCommonHookOptions {}
+interface RealtimeViewerHookOptions extends RealtimeCommonHookOptions {}
 
 type RealtimeDrawerValue = [
   React.RefObject<HTMLCanvasElement>,
   RealtimeDrawerHookOptions
 ];
 
-type RealtimeViewerValue = [React.RefObject<HTMLCanvasElement>, onChangeMethod];
+type RealtimeViewerValue = [
+  React.RefObject<HTMLCanvasElement>,
+  onChangeMethod,
+  RealtimeViewerHookOptions
+];
 
 export const useRealtimeDrawer = ({
   strokeWidth = 5,
@@ -356,5 +363,30 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
     }
   }, [ref.current]);
 
-  return [ref, drawToCanvas];
+  const reset = React.useCallback(() => {
+    count.current = 0;
+
+    if (ctx && ref.current) {
+      const { height, width } = ctx.canvas.getBoundingClientRect();
+
+      ctx.clearRect(
+        0,
+        0,
+        width * window.devicePixelRatio,
+        height * window.devicePixelRatio
+      );
+
+      const rCtx = ref.current.getContext('2d');
+      if (rCtx) {
+        rCtx.clearRect(
+          0,
+          0,
+          width * window.devicePixelRatio,
+          height * window.devicePixelRatio
+        );
+      }
+    }
+  }, [ctx, ref.current]);
+
+  return [ref, drawToCanvas, { reset }];
 };
