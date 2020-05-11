@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-draw';
 
 const colors = ['#626262', '#97ad7d', '#ca4400'];
@@ -8,9 +8,14 @@ const App = () => {
   const [color, setColor] = useState('#626262');
   const [strokeWidth, setStrokeWidth] = useState(5);
 
+  const onChange = useCallback((payload) => {
+    console.log(payload);
+  }, []);
+
   const [drawerRef] = useRealtimeDrawer({
     color,
     strokeWidth,
+    onChange,
   });
 
   const [viewerRef] = useRealtimeViewer();

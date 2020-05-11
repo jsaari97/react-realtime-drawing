@@ -5,16 +5,31 @@ interface Coordinate {
   y: number;
 }
 
+interface PointPayload {
+  x: number;
+  y: number;
+  color: string;
+  strokeWidth: number;
+  canvas: {
+    width: number;
+    height: number;
+  };
+}
+
+type onChangeMethod = (payload: PointPayload) => void;
+
 interface RealtimeDrawerOptions {
   strokeWidth?: number;
   color?: string;
   refreshRate?: number;
+  onChange?: onChangeMethod;
 }
 
 export const useRealtimeDrawer = ({
   strokeWidth = 5,
   color = '#000',
   refreshRate = 3,
+  onChange,
 }: RealtimeDrawerOptions = {}) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
@@ -93,8 +108,21 @@ export const useRealtimeDrawer = ({
       );
 
       ctx.stroke();
+
+      if (onChange) {
+        onChange({
+          x: points.current[points.current.length - 1].x,
+          y: points.current[points.current.length - 1].y,
+          color,
+          strokeWidth,
+          canvas: {
+            width,
+            height,
+          },
+        });
+      }
     }
-  }, [ctx, color, strokeWidth, refreshRate]);
+  }, [ctx, color, strokeWidth, refreshRate, onChange]);
 
   const handleDraw = React.useCallback(
     (e: TouchEvent | MouseEvent) => {
