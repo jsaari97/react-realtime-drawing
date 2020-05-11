@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRealtimeDrawing } from 'react-realtime-draw';
+import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-draw';
 
 const colors = ['#626262', '#97ad7d', '#ca4400'];
 const widths = [2, 5, 10];
@@ -8,15 +8,17 @@ const App = () => {
   const [color, setColor] = useState('#626262');
   const [strokeWidth, setStrokeWidth] = useState(5);
 
-  const [ref] = useRealtimeDrawing({
+  const [drawerRef] = useRealtimeDrawer({
     color,
     strokeWidth,
   });
 
+  const [viewerRef] = useRealtimeViewer();
+
   return (
     <div>
       <div style={{ height: 512, width: 512 }}>
-        <canvas ref={ref} />
+        <canvas ref={drawerRef} />
       </div>
       <div>
         <div>
@@ -38,6 +40,11 @@ const App = () => {
               {w}
             </button>
           ))}
+        </div>
+      </div>
+      <div>
+        <div style={{ height: 512, width: 512 }}>
+          <canvas ref={viewerRef} />
         </div>
       </div>
     </div>

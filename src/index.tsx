@@ -11,7 +11,7 @@ interface RealtimeDrawingOpts {
   refreshRate?: number;
 }
 
-export const useRealtimeDrawing = ({
+export const useRealtimeDrawer = ({
   strokeWidth = 5,
   color = '#000',
   refreshRate = 3,
@@ -57,7 +57,7 @@ export const useRealtimeDrawing = ({
         height * window.devicePixelRatio
       );
 
-      if (points.current.length < 3) {
+      if (points.current.length < refreshRate) {
         ctx.beginPath();
         ctx.arc(
           points.current[0].x,
@@ -94,7 +94,7 @@ export const useRealtimeDrawing = ({
 
       ctx.stroke();
     }
-  }, [ctx, color, strokeWidth]);
+  }, [ctx, color, strokeWidth, refreshRate]);
 
   const handleDraw = React.useCallback(
     (e: TouchEvent | MouseEvent) => {
@@ -107,12 +107,8 @@ export const useRealtimeDrawing = ({
 
         // calculate XY coordinates taking account of container offset
         const point = {
-          x: Math.floor(
-            pageX * window.devicePixelRatio - ref.current.offsetLeft
-          ),
-          y: Math.floor(
-            pageY * window.devicePixelRatio - ref.current.offsetTop
-          ),
+          x: Math.floor(pageX - ref.current.offsetLeft),
+          y: Math.floor(pageY - ref.current.offsetTop),
         };
 
         // increment frame count
@@ -141,6 +137,8 @@ export const useRealtimeDrawing = ({
       if (ref.current.parentElement.querySelector('#realtime-canvas')) {
         return;
       }
+
+      // Setup
       const {
         width,
         height,
@@ -168,8 +166,6 @@ export const useRealtimeDrawing = ({
       // events
       const start = (e: MouseEvent | TouchEvent) => {
         setMouseDown(true);
-        points.current = [];
-        count.current = 0;
         handleDraw(e);
       };
 
@@ -184,7 +180,7 @@ export const useRealtimeDrawing = ({
         ref.current.onmouseup = applyStroke;
       }
     }
-  }, [ref.current, drawToCanvas, applyStroke]);
+  }, [ref.current, drawToCanvas, applyStroke, handleDraw]);
 
   React.useEffect(() => {
     if (mouseDown && ref.current) {
@@ -195,6 +191,12 @@ export const useRealtimeDrawing = ({
       }
     }
   }, [mouseDown, ref.current, ctx]);
+
+  return [ref];
+};
+
+export const useRealtimeViewer = () => {
+  const ref = React.useRef<HTMLCanvasElement>(null);
 
   return [ref];
 };
