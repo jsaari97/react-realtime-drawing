@@ -12,7 +12,7 @@ const App = () => {
     console.log(payload);
   }, []);
 
-  const [drawerRef] = useRealtimeDrawer({
+  const [drawerRef, { reset }] = useRealtimeDrawer({
     color,
     strokeWidth,
     onChange,
@@ -46,6 +46,9 @@ const App = () => {
             </button>
           ))}
         </div>
+      </div>
+      <div>
+        <button onClick={reset}>Reset</button>
       </div>
       <div>
         <div style={{ height: 512, width: 512 }}>

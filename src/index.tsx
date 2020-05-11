@@ -25,12 +25,21 @@ interface RealtimeDrawerOptions {
   onChange?: onChangeMethod;
 }
 
+interface RealtimeDrawerHookOptions {
+  reset: () => void;
+}
+
+type RealtimeDrawerValue = [
+  React.RefObject<HTMLCanvasElement>,
+  RealtimeDrawerHookOptions
+];
+
 export const useRealtimeDrawer = ({
   strokeWidth = 5,
   color = '#000',
   refreshRate = 3,
   onChange,
-}: RealtimeDrawerOptions = {}) => {
+}: RealtimeDrawerOptions = {}): RealtimeDrawerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
   const count = React.useRef<number>(0);
@@ -220,7 +229,33 @@ export const useRealtimeDrawer = ({
     }
   }, [mouseDown, ref.current, ctx]);
 
-  return [ref];
+  const reset = React.useCallback(() => {
+    count.current = 0;
+    points.current = [];
+
+    if (ctx && ref.current) {
+      const { height, width } = ctx.canvas.getBoundingClientRect();
+
+      ctx.clearRect(
+        0,
+        0,
+        width * window.devicePixelRatio,
+        height * window.devicePixelRatio
+      );
+
+      const rCtx = ref.current.getContext('2d');
+      if (rCtx) {
+        rCtx.clearRect(
+          0,
+          0,
+          width * window.devicePixelRatio,
+          height * window.devicePixelRatio
+        );
+      }
+    }
+  }, [ctx, ref.current]);
+
+  return [ref, { reset }];
 };
 
 export const useRealtimeViewer = () => {
