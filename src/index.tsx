@@ -5,7 +5,7 @@ interface Coordinate {
   y: number;
 }
 
-interface RealtimeDrawingOpts {
+interface RealtimeDrawerOptions {
   strokeWidth?: number;
   color?: string;
   refreshRate?: number;
@@ -15,7 +15,7 @@ export const useRealtimeDrawer = ({
   strokeWidth = 5,
   color = '#000',
   refreshRate = 3,
-}: RealtimeDrawingOpts = {}) => {
+}: RealtimeDrawerOptions = {}) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
   const count = React.useRef<number>(0);
