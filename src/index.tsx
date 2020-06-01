@@ -97,6 +97,7 @@ export const useRealtimeDrawer = ({
         ctx.beginPath();
         ctx.moveTo(payload[0].x, payload[0].y);
 
+        // eslint-disable-next-line no-var
         for (var i = 1; i < payload.length - 2; i++) {
           ctx.quadraticCurveTo(
             payload[i].x,
@@ -306,6 +307,7 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
         ctx.beginPath();
         ctx.moveTo(payload[0].x, payload[0].y);
 
+        // eslint-disable-next-line no-var
         for (var i = 1; i < payload.length - 2; i++) {
           ctx.quadraticCurveTo(
             payload[i].x,
