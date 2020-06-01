@@ -1,7 +1,7 @@
-import { useRealtimeDrawing } from './index';
+import { useRealtimeDrawer } from './index';
 
-describe('useRealtimeDrawing', () => {
+describe('useRealtimeDrawer', () => {
   it('should be truthy', () => {
-    expect(useRealtimeDrawing).toBeTruthy();
+    expect(useRealtimeDrawer).toBeTruthy();
   });
 });
