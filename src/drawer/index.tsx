@@ -42,7 +42,7 @@ export const useRealtimeDrawer = ({
         // increment frame count
         count.current++;
 
-        if (count.current % 2 === 0 || count.current < 3) {
+        if (count.current % 1 === 0 || count.current < 2) {
           const {
             width,
             height,
