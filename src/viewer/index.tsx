@@ -1,23 +1,18 @@
 import * as React from 'react';
 import { PointPayload, RealtimeViewerValue } from '../types';
 import { useCanvasReset } from '../common/useCanvasReset';
+import { useStrokeApply } from '../common/useStrokeApply';
 
 export const useRealtimeViewer = (): RealtimeViewerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
   const count = React.useRef<number>(0);
 
-  const applyStroke = React.useCallback(() => {
-    if (ref.current && ctx) {
-      count.current = 0;
+  const handleApply = React.useCallback(() => {
+    count.current = 0;
+  }, []);
 
-      const context = ref.current.getContext('2d');
-      if (context) {
-        context.drawImage(ctx.canvas, 0, 0);
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      }
-    }
-  }, [ctx, ref]);
+  const applyStroke = useStrokeApply({ ref, ctx, onApply: handleApply });
 
   const drawToCanvas = React.useCallback(
     (payload: PointPayload[]) => {

@@ -5,6 +5,7 @@ import {
   PointPayload,
 } from '../types';
 import { useCanvasReset } from '../common/useCanvasReset';
+import { useStrokeApply } from '../common/useStrokeApply';
 
 export const useRealtimeDrawer = ({
   strokeWidth = 16,
@@ -18,7 +19,7 @@ export const useRealtimeDrawer = ({
 
   const [mouseDown, setMouseDown] = React.useState<boolean>(false);
 
-  const applyStroke = React.useCallback(() => {
+  const handleApply = React.useCallback(() => {
     setMouseDown(false);
 
     if (ref.current && ctx) {
@@ -27,13 +28,10 @@ export const useRealtimeDrawer = ({
 
       points.current = [];
       count.current = 0;
-      const c = ref.current.getContext('2d');
-      if (c) {
-        c.drawImage(ctx.canvas, 0, 0);
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      }
     }
-  }, [ctx, ref.current]);
+  }, [ref, ctx]);
+
+  const applyStroke = useStrokeApply({ ref, ctx, onApply: handleApply });
 
   const drawToCanvas = React.useCallback(
     (payload: PointPayload[]) => {
