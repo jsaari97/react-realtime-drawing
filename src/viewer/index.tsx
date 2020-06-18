@@ -17,16 +17,13 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
 
   const handleDraw = React.useCallback(
     (payload: PointPayload[]): boolean => {
-      if (payload.length === 1 && count.current === 0) {
+      if (
+        (payload.length === 1 && count.current === 0) ||
+        payload.length < count.current
+      ) {
         applyStroke();
 
         return true;
-      }
-
-      if (payload.length < count.current) {
-        applyStroke();
-
-        return false;
       }
 
       count.current = payload.length;
