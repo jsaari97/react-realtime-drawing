@@ -1,10 +1,10 @@
 {
-  "name": "react-realtime-draw",
+  "name": "react-realtime-drawing",
   "version": "0.1.0",
-  "description": "Realtime drawing hooks for React",
+  "description": "Realtime canvas drawing hooks for React",
   "author": "jsaari97",
   "license": "MIT",
-  "repository": "jsaari97/react-realtime-draw",
+  "repository": "jsaari97/react-realtime-drawing",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
@@ -14,7 +14,8 @@
     "canvas",
     "draw",
     "drawing",
-    "hooks"
+    "hooks",
+    "canvas"
   ],
   "engines": {
     "node": ">=10"

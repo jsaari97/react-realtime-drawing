@@ -1,13 +1,13 @@
 {
-  "name": "react-realtime-draw-example",
-  "homepage": "https://jsaari97.github.io/react-realtime-draw",
+  "name": "react-realtime-drawing-example",
+  "homepage": "https://jsaari97.github.io/react-realtime-drawing",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",
-    "react-realtime-draw": "link:.."
+    "react-realtime-drawing": "link:.."
   },
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",

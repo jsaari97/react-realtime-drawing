@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './main.css';
-import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-draw';
+import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-drawing';
 import { Swatches } from './components/swatches';
 import { Sizes } from './components/sizes';
 

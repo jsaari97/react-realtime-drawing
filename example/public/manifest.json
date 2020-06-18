@@ -1,6 +1,6 @@
 {
-  "short_name": "react-realtime-draw",
-  "name": "react-realtime-draw",
+  "short_name": "react-realtime-drawing",
+  "name": "react-realtime-drawing",
   "icons": [
     {
       "src": "favicon.ico",

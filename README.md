@@ -6,7 +6,7 @@ React hooks for drawing and viewing the drawing in real time.
 
 ```jsx
 import * as React from 'react';
-import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-draw';
+import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-drawing';
 
 export default () => {
   const [viewerRef, { onChange }] = useRealtimeViewer();
@@ -32,11 +32,11 @@ export default () => {
 ## Install
 
 ```bash
-$ npm install react-realtime-draw
+$ npm install react-realtime-drawing
 
 # or using Yarn
 
-$ yarn add react-realtime-draw
+$ yarn add react-realtime-drawing
 ```
 
 ## License
