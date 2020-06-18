@@ -6,6 +6,7 @@ import {
 } from '../types';
 import { useCanvasReset } from '../common/useCanvasReset';
 import { useStrokeApply } from '../common/useStrokeApply';
+import { useCanvasDraw } from '../common/useCanvasDraw';
 
 export const useRealtimeDrawer = ({
   strokeWidth = 16,
@@ -33,58 +34,7 @@ export const useRealtimeDrawer = ({
 
   const applyStroke = useStrokeApply({ ref, ctx, onApply: handleApply });
 
-  const drawToCanvas = React.useCallback(
-    (payload: PointPayload[]) => {
-      if (ctx && payload.length) {
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = payload[0].color;
-        ctx.fillStyle = payload[0].color;
-        ctx.lineWidth = payload[0].strokeWidth;
-
-        ctx.clearRect(0, 0, payload[0].canvas.width, payload[0].canvas.height);
-
-        if (payload.length < 3) {
-          ctx.beginPath();
-          ctx.arc(
-            payload[0].x,
-            payload[0].y,
-            ctx.lineWidth / 2,
-            0,
-            Math.PI * 2
-          );
-          ctx.fill();
-          ctx.closePath();
-
-          return;
-        }
-
-        ctx.beginPath();
-        ctx.moveTo(payload[0].x, payload[0].y);
-
-        // eslint-disable-next-line no-var
-        for (var i = 1; i < payload.length - 2; i++) {
-          ctx.quadraticCurveTo(
-            payload[i].x,
-            payload[i].y,
-            (payload[i].x + payload[i + 1].x) / 2,
-            (payload[i].y + payload[i + 1].y) / 2
-          );
-        }
-
-        // For the last 2 points
-        ctx.quadraticCurveTo(
-          payload[i].x,
-          payload[i].y,
-          payload[i + 1].x,
-          payload[i + 1].y
-        );
-
-        ctx.stroke();
-      }
-    },
-    [ctx]
-  );
+  const drawToCanvas = useCanvasDraw({ ctx });
 
   const handleDraw = React.useCallback(
     (e: TouchEvent | MouseEvent) => {

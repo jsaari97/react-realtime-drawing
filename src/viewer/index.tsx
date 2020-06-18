@@ -2,6 +2,7 @@ import * as React from 'react';
 import { PointPayload, RealtimeViewerValue } from '../types';
 import { useCanvasReset } from '../common/useCanvasReset';
 import { useStrokeApply } from '../common/useStrokeApply';
+import { useCanvasDraw } from '../common/useCanvasDraw';
 
 export const useRealtimeViewer = (): RealtimeViewerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
@@ -14,7 +15,7 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
 
   const applyStroke = useStrokeApply({ ref, ctx, onApply: handleApply });
 
-  const drawToCanvas = React.useCallback(
+  const handleDraw = React.useCallback(
     (payload: PointPayload[]) => {
       if (payload.length <= count.current) {
         applyStroke();
@@ -23,57 +24,17 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
       }
 
       count.current = payload.length;
-
-      if (ctx && payload.length) {
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = payload[0].color;
-        ctx.fillStyle = payload[0].color;
-        ctx.lineWidth = payload[0].strokeWidth;
-
-        ctx.clearRect(0, 0, payload[0].canvas.width, payload[0].canvas.height);
-
-        if (payload.length < 3) {
-          ctx.beginPath();
-          ctx.arc(
-            payload[0].x,
-            payload[0].y,
-            ctx.lineWidth / 2,
-            0,
-            Math.PI * 2
-          );
-          ctx.fill();
-          ctx.closePath();
-
-          return;
-        }
-
-        ctx.beginPath();
-        ctx.moveTo(payload[0].x, payload[0].y);
-
-        // eslint-disable-next-line no-var
-        for (var i = 1; i < payload.length - 2; i++) {
-          ctx.quadraticCurveTo(
-            payload[i].x,
-            payload[i].y,
-            (payload[i].x + payload[i + 1].x) / 2,
-            (payload[i].y + payload[i + 1].y) / 2
-          );
-        }
-
-        // For the last 2 points
-        ctx.quadraticCurveTo(
-          payload[i].x,
-          payload[i].y,
-          payload[i + 1].x,
-          payload[i + 1].y
-        );
-
-        ctx.stroke();
-      }
     },
-    [ctx, applyStroke]
+    [applyStroke]
   );
+
+  const drawToCanvas = useCanvasDraw({ ctx, onDraw: handleDraw });
+
+  const handleReset = React.useCallback(() => {
+    count.current = 0;
+  }, []);
+
+  const reset = useCanvasReset({ ref, ctx, onReset: handleReset });
 
   React.useEffect(() => {
     if (ref.current) {
@@ -108,12 +69,6 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
       setCtx(canvas.getContext('2d'));
     }
   }, [ref]);
-
-  const handleReset = React.useCallback(() => {
-    count.current = 0;
-  }, []);
-
-  const reset = useCanvasReset({ ref, ctx, onReset: handleReset });
 
   return [ref, drawToCanvas, { reset }];
 };
