@@ -1,13 +1,21 @@
 {
   "name": "react-realtime-draw",
   "version": "0.1.0",
-  "description": "Realtime drawing component for React",
+  "description": "Realtime drawing hooks for React",
   "author": "jsaari97",
   "license": "MIT",
   "repository": "jsaari97/react-realtime-draw",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
+  "keywords": [
+    "react",
+    "realtime",
+    "canvas",
+    "draw",
+    "drawing",
+    "hooks"
+  ],
   "engines": {
     "node": ">=10"
   },
@@ -18,8 +26,8 @@
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:unit": "cross-env CI=1 react-scripts test",
+    "test:watch": "react-scripts test",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
