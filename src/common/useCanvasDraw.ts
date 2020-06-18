@@ -3,17 +3,19 @@ import { PointPayload } from '../types';
 
 interface CanvasDrawProps {
   ctx: CanvasRenderingContext2D | null;
-  onDraw?: (payload: PointPayload[]) => void;
+  shouldDraw?: (payload: PointPayload[]) => boolean;
 }
 
 export const useCanvasDraw = ({
   ctx,
-  onDraw,
+  shouldDraw,
 }: CanvasDrawProps): ((payload: PointPayload[]) => void) => {
   const draw = React.useCallback(
     (payload: PointPayload[]) => {
-      if (onDraw) {
-        onDraw(payload);
+      if (shouldDraw !== undefined) {
+        if (!shouldDraw(payload)) {
+          return;
+        }
       }
 
       if (ctx && payload.length) {
@@ -64,7 +66,7 @@ export const useCanvasDraw = ({
         ctx.stroke();
       }
     },
-    [ctx]
+    [ctx, shouldDraw]
   );
 
   return draw;
