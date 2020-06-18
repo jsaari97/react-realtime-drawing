@@ -43,7 +43,12 @@ export const useRealtimeDrawer = ({
         count.current++;
 
         if (count.current % 2 === 0 || count.current < 3) {
-          const { width, height } = ref.current.getBoundingClientRect();
+          const {
+            width,
+            height,
+            left,
+            top,
+          } = ref.current.getBoundingClientRect();
 
           // Get cursor coordinates from mouse or touch event
           const pageX =
@@ -52,8 +57,8 @@ export const useRealtimeDrawer = ({
             e instanceof TouchEvent ? e.changedTouches[0].pageY : e.pageY;
 
           const payload: PointPayload = {
-            x: Math.floor(pageX - ref.current.offsetLeft),
-            y: Math.floor(pageY - ref.current.offsetTop),
+            x: Math.floor(pageX - left),
+            y: Math.floor(pageY - top),
             color,
             strokeWidth,
             canvas: {
