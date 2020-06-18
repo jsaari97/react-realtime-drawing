@@ -1,4 +1,4 @@
-import { useRealtimeViewer } from './viewer';
+import { useRealtimeViewer } from '.';
 
 describe('useRealtimeViewer', () => {
   it('should be truthy', () => {

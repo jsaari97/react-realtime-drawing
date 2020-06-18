@@ -1,18 +1,34 @@
 import * as React from 'react';
-import { PointPayload, RealtimeViewerValue } from './types';
+import {
+  RealtimeDrawerOptions,
+  RealtimeDrawerValue,
+  PointPayload,
+} from '../types';
 
-export const useRealtimeViewer = (): RealtimeViewerValue => {
+export const useRealtimeDrawer = ({
+  strokeWidth = 16,
+  color = '#000',
+  onChange,
+}: RealtimeDrawerOptions = {}): RealtimeDrawerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
   const count = React.useRef<number>(0);
+  const points = React.useRef<PointPayload[]>([]);
+
+  const [mouseDown, setMouseDown] = React.useState<boolean>(false);
 
   const applyStroke = React.useCallback(() => {
-    if (ref.current && ctx) {
-      count.current = 0;
+    setMouseDown(false);
 
-      const context = ref.current.getContext('2d');
-      if (context) {
-        context.drawImage(ctx.canvas, 0, 0);
+    if (ref.current && ctx) {
+      ref.current.onmousemove = null;
+      ref.current.ontouchmove = null;
+
+      points.current = [];
+      count.current = 0;
+      const c = ref.current.getContext('2d');
+      if (c) {
+        c.drawImage(ctx.canvas, 0, 0);
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       }
     }
@@ -20,14 +36,6 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
 
   const drawToCanvas = React.useCallback(
     (payload: PointPayload[]) => {
-      if (payload.length <= count.current) {
-        applyStroke();
-
-        return;
-      }
-
-      count.current = payload.length;
-
       if (ctx && payload.length) {
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
@@ -76,7 +84,46 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
         ctx.stroke();
       }
     },
-    [ctx, applyStroke]
+    [ctx]
+  );
+
+  const handleDraw = React.useCallback(
+    (e: TouchEvent | MouseEvent) => {
+      if (ref.current) {
+        // increment frame count
+        count.current++;
+
+        if (count.current % 2 === 0 || count.current < 3) {
+          const { width, height } = ref.current.getBoundingClientRect();
+
+          // Get cursor coordinates from mouse or touch event
+          const pageX =
+            e instanceof TouchEvent ? e.changedTouches[0].pageX : e.pageX;
+          const pageY =
+            e instanceof TouchEvent ? e.changedTouches[0].pageY : e.pageY;
+
+          const payload: PointPayload = {
+            x: Math.floor(pageX - ref.current.offsetLeft),
+            y: Math.floor(pageY - ref.current.offsetTop),
+            color,
+            strokeWidth,
+            canvas: {
+              width,
+              height,
+            },
+          };
+
+          points.current.push(payload);
+
+          if (onChange) {
+            onChange(points.current);
+          }
+
+          drawToCanvas(points.current);
+        }
+      }
+    },
+    [ref.current, drawToCanvas, color, strokeWidth, onChange]
   );
 
   React.useEffect(() => {
@@ -113,8 +160,40 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
     }
   }, [ref.current]);
 
+  React.useEffect(() => {
+    if (ref.current) {
+      // events
+      const start = (e: MouseEvent | TouchEvent) => {
+        setMouseDown(true);
+        handleDraw(e);
+      };
+
+      // attach events
+      if ('ontouchstart' in window) {
+        ref.current.ontouchstart = start;
+        ref.current.ontouchend = applyStroke;
+        ref.current.ontouchcancel = applyStroke;
+      } else {
+        ref.current.onmousedown = start;
+        ref.current.onmouseleave = applyStroke;
+        ref.current.onmouseup = applyStroke;
+      }
+    }
+  }, [ref.current, drawToCanvas, applyStroke, handleDraw]);
+
+  React.useEffect(() => {
+    if (mouseDown && ref.current) {
+      if ('ontouchstart' in window) {
+        ref.current.ontouchmove = handleDraw;
+      } else {
+        ref.current.onmousemove = handleDraw;
+      }
+    }
+  }, [mouseDown, ref.current, ctx]);
+
   const reset = React.useCallback(() => {
     count.current = 0;
+    points.current = [];
 
     if (ctx && ref.current) {
       const { height, width } = ctx.canvas.getBoundingClientRect();
@@ -138,5 +217,5 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
     }
   }, [ctx, ref.current]);
 
-  return [ref, drawToCanvas, { reset }];
+  return [ref, { reset }];
 };
