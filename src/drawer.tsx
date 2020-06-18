@@ -6,9 +6,8 @@ import {
 } from './types';
 
 export const useRealtimeDrawer = ({
-  strokeWidth = 5,
+  strokeWidth = 16,
   color = '#000',
-  refreshRate = 3,
   onChange,
 }: RealtimeDrawerOptions = {}): RealtimeDrawerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
@@ -46,7 +45,7 @@ export const useRealtimeDrawer = ({
 
         ctx.clearRect(0, 0, payload[0].canvas.width, payload[0].canvas.height);
 
-        if (payload.length < refreshRate) {
+        if (payload.length < 3) {
           ctx.beginPath();
           ctx.arc(
             payload[0].x,
@@ -85,7 +84,7 @@ export const useRealtimeDrawer = ({
         ctx.stroke();
       }
     },
-    [ctx, refreshRate]
+    [ctx]
   );
 
   const handleDraw = React.useCallback(
@@ -94,7 +93,7 @@ export const useRealtimeDrawer = ({
         // increment frame count
         count.current++;
 
-        if (count.current % refreshRate === 0 || count.current < refreshRate) {
+        if (count.current % 2 === 0 || count.current < 3) {
           const { width, height } = ref.current.getBoundingClientRect();
 
           // Get cursor coordinates from mouse or touch event
@@ -124,7 +123,7 @@ export const useRealtimeDrawer = ({
         }
       }
     },
-    [ref.current, drawToCanvas, refreshRate, color, strokeWidth, onChange]
+    [ref.current, drawToCanvas, color, strokeWidth, onChange]
   );
 
   React.useEffect(() => {
@@ -206,9 +205,9 @@ export const useRealtimeDrawer = ({
         height * window.devicePixelRatio
       );
 
-      const rCtx = ref.current.getContext('2d');
-      if (rCtx) {
-        rCtx.clearRect(
+      const refContext = ref.current.getContext('2d');
+      if (refContext) {
+        refContext.clearRect(
           0,
           0,
           width * window.devicePixelRatio,

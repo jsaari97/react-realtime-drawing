@@ -9,9 +9,10 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
   const applyStroke = React.useCallback(() => {
     if (ref.current && ctx) {
       count.current = 0;
-      const c = ref.current.getContext('2d');
-      if (c) {
-        c.drawImage(ctx.canvas, 0, 0);
+
+      const context = ref.current.getContext('2d');
+      if (context) {
+        context.drawImage(ctx.canvas, 0, 0);
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       }
     }
@@ -125,9 +126,9 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
         height * window.devicePixelRatio
       );
 
-      const rCtx = ref.current.getContext('2d');
-      if (rCtx) {
-        rCtx.clearRect(
+      const refContext = ref.current.getContext('2d');
+      if (refContext) {
+        refContext.clearRect(
           0,
           0,
           width * window.devicePixelRatio,

@@ -14,7 +14,6 @@ export type onChangeMethod = (payload: PointPayload[]) => void;
 export interface RealtimeDrawerOptions {
   strokeWidth?: number;
   color?: string;
-  refreshRate?: number;
   onChange?: onChangeMethod;
 }
 
