@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { PointPayload, RealtimeViewerValue } from '../types';
+import { useCanvasReset } from '../common/useCanvasReset';
 
 export const useRealtimeViewer = (): RealtimeViewerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
@@ -16,7 +17,7 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       }
     }
-  }, [ctx, ref.current]);
+  }, [ctx, ref]);
 
   const drawToCanvas = React.useCallback(
     (payload: PointPayload[]) => {
@@ -111,32 +112,13 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
       ref.current.parentElement.insertAdjacentElement('beforeend', canvas);
       setCtx(canvas.getContext('2d'));
     }
-  }, [ref.current]);
+  }, [ref]);
 
-  const reset = React.useCallback(() => {
+  const handleReset = React.useCallback(() => {
     count.current = 0;
+  }, []);
 
-    if (ctx && ref.current) {
-      const { height, width } = ctx.canvas.getBoundingClientRect();
-
-      ctx.clearRect(
-        0,
-        0,
-        width * window.devicePixelRatio,
-        height * window.devicePixelRatio
-      );
-
-      const refContext = ref.current.getContext('2d');
-      if (refContext) {
-        refContext.clearRect(
-          0,
-          0,
-          width * window.devicePixelRatio,
-          height * window.devicePixelRatio
-        );
-      }
-    }
-  }, [ctx, ref.current]);
+  const reset = useCanvasReset({ ref, ctx, onReset: handleReset });
 
   return [ref, drawToCanvas, { reset }];
 };

@@ -4,6 +4,7 @@ import {
   RealtimeDrawerValue,
   PointPayload,
 } from '../types';
+import { useCanvasReset } from '../common/useCanvasReset';
 
 export const useRealtimeDrawer = ({
   strokeWidth = 16,
@@ -191,31 +192,12 @@ export const useRealtimeDrawer = ({
     }
   }, [mouseDown, ref.current, ctx]);
 
-  const reset = React.useCallback(() => {
+  const handleReset = React.useCallback(() => {
     count.current = 0;
     points.current = [];
+  }, []);
 
-    if (ctx && ref.current) {
-      const { height, width } = ctx.canvas.getBoundingClientRect();
-
-      ctx.clearRect(
-        0,
-        0,
-        width * window.devicePixelRatio,
-        height * window.devicePixelRatio
-      );
-
-      const refContext = ref.current.getContext('2d');
-      if (refContext) {
-        refContext.clearRect(
-          0,
-          0,
-          width * window.devicePixelRatio,
-          height * window.devicePixelRatio
-        );
-      }
-    }
-  }, [ctx, ref.current]);
+  const reset = useCanvasReset({ ref, ctx, onReset: handleReset });
 
   return [ref, { reset }];
 };
