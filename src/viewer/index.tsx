@@ -16,24 +16,20 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
   const applyStroke = useStrokeApply({ ref, ctx, onApply: handleApply });
 
   const handleDraw = React.useCallback(
-    (payload: PointPayload[]): boolean => {
+    (payload: PointPayload[]): void => {
       if (
         (payload.length === 1 && count.current === 0) ||
         payload.length < count.current
       ) {
         applyStroke();
-
-        return true;
+      } else {
+        count.current = payload.length;
       }
-
-      count.current = payload.length;
-
-      return true;
     },
     [applyStroke]
   );
 
-  const drawToCanvas = useCanvasDraw({ ctx, shouldDraw: handleDraw });
+  const drawToCanvas = useCanvasDraw({ ctx, onDraw: handleDraw });
 
   const handleReset = React.useCallback(() => {
     count.current = 0;
