@@ -3,10 +3,7 @@ export interface PointPayload {
   y: number;
   color: string;
   strokeWidth: number;
-  canvas: {
-    width: number;
-    height: number;
-  };
+  ratio: number;
 }
 
 export type onChangeMethod = (payload: PointPayload[]) => void;

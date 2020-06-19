@@ -17,6 +17,7 @@ export const useRealtimeDrawer = ({
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
   const count = React.useRef<number>(0);
   const points = React.useRef<PointPayload[]>([]);
+  const [ratio, setRatio] = React.useState<number>(0);
 
   const [mouseDown, setMouseDown] = React.useState<boolean>(false);
 
@@ -57,14 +58,11 @@ export const useRealtimeDrawer = ({
             e instanceof TouchEvent ? e.changedTouches[0].pageY : e.pageY;
 
           const payload: PointPayload = {
-            x: Math.floor(pageX - left),
-            y: Math.floor(pageY - top),
+            x: Math.floor(pageX - left - window.pageXOffset) / width,
+            y: Math.floor(pageY - top - window.pageYOffset) / height,
             color,
-            strokeWidth,
-            canvas: {
-              width,
-              height,
-            },
+            strokeWidth: strokeWidth / Math.sqrt(width ** 2 + height ** 2),
+            ratio,
           };
 
           points.current.push(payload);
@@ -77,7 +75,7 @@ export const useRealtimeDrawer = ({
         }
       }
     },
-    [ref.current, drawToCanvas, color, strokeWidth, onChange]
+    [ref, drawToCanvas, color, strokeWidth, onChange, ratio]
   );
 
   React.useEffect(() => {
@@ -100,6 +98,9 @@ export const useRealtimeDrawer = ({
       ref.current.parentElement.style.position = 'relative';
       ref.current.height = height;
       ref.current.width = width;
+      ref.current.style.touchAction = 'none';
+
+      setRatio(width / height);
 
       const canvas = document.createElement('canvas');
       canvas.id = 'realtime-canvas';
@@ -112,11 +113,10 @@ export const useRealtimeDrawer = ({
       ref.current.parentElement.insertAdjacentElement('beforeend', canvas);
       setCtx(canvas.getContext('2d'));
     }
-  }, [ref.current]);
+  }, [ref]);
 
   React.useEffect(() => {
     if (ref.current) {
-      // events
       const start = (e: MouseEvent | TouchEvent) => {
         setMouseDown(true);
         handleDraw(e);
@@ -133,7 +133,7 @@ export const useRealtimeDrawer = ({
         ref.current.onmouseup = applyStroke;
       }
     }
-  }, [ref.current, drawToCanvas, applyStroke, handleDraw]);
+  }, [ref, drawToCanvas, applyStroke, handleDraw]);
 
   React.useEffect(() => {
     if (mouseDown && ref.current) {
