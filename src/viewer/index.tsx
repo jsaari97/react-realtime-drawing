@@ -39,12 +39,12 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
 
   React.useEffect(() => {
     if (ref.current) {
-      if (!ref.current.parentElement) {
-        console.warn('canvas needs to be inside a parent node');
+      if (ctx) {
         return;
       }
 
-      if (ref.current.parentElement.querySelector('#realtime-canvas')) {
+      if (!ref.current.parentElement) {
+        console.warn('canvas needs to be inside a parent node');
         return;
       }
 
@@ -59,7 +59,6 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
       ref.current.width = width;
 
       const canvas = document.createElement('canvas');
-      canvas.id = 'realtime-canvas';
       canvas.style.position = 'absolute';
       canvas.style.left = '0';
       canvas.style.top = '0';
@@ -69,7 +68,7 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
       ref.current.parentElement.insertAdjacentElement('beforeend', canvas);
       setCtx(canvas.getContext('2d'));
     }
-  }, [ref]);
+  }, [ref, ctx]);
 
   return [ref, drawToCanvas, { reset }];
 };
