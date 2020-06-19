@@ -101,8 +101,11 @@ button {
 }
 
 .reset-button {
+  background-color: #6d53fd;
+  color: #fff;
   padding: 1.25rem 2rem;
   font-weight: bolder;
   letter-spacing: 0.125em;
   margin-top: 3.5rem;
+  box-shadow: 0 10px 14px -10px rgba(0, 0, 0, 0.25);
 }

@@ -1,11 +1,21 @@
 # React Realtime Draw
 
-React hooks for drawing and viewing the drawing in real time.
+React hooks for drawing and spectating in real time.
+
+## Features
+
+- React hooks support :sparkles:
+- Supports canvas scaling :arrow_up_down:
+- Mouse- and touch-support :computer_mouse::point_up_2:
+- Brush color and size support :paintbrush:
+- Lightweight, under 2kB gzipped :rocket:
+- Dependency-free! :package:
+- Built with TypeScript, typings included :computer:
 
 ## Usage
 
 ```jsx
-import * as React from 'react';
+import React from 'react';
 import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-drawing';
 
 export default () => {
@@ -29,7 +39,7 @@ export default () => {
 }
 ```
 
-## Install
+## Installation
 
 ```bash
 $ npm install react-realtime-drawing
