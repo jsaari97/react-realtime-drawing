@@ -5,9 +5,9 @@ React hooks for drawing and spectating in real time.
 ## Features
 
 - React hooks support :sparkles:
-- Supports canvas scaling :arrow_up_down:
 - Mouse- and touch-support :computer_mouse::point_up_2:
 - Brush color and size support :paintbrush:
+- Automatic canvas scaling :arrow_up_down:
 - Lightweight, under 2kB gzipped :rocket:
 - Dependency-free! :package:
 - Built with TypeScript, typings included :computer:
