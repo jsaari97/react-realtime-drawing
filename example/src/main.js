@@ -3,6 +3,8 @@ import './main.css';
 import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-drawing';
 import { Swatches } from './components/swatches';
 import { Sizes } from './components/sizes';
+import { Footer } from './components/footer';
+import { Header } from './components/header';
 
 const App = () => {
   const [color, setColor] = React.useState('#134e6f');
@@ -22,29 +24,32 @@ const App = () => {
   }, [resetDrawer, resetViewer]);
 
   return (
-    <div className='container'>
-      <h1 className='app-header'>React Realtime Drawing</h1>
-      <div className='canvas-container'>
-        <div className='canvas'>
-          <canvas ref={drawerRef} />
+    <div className='app-container'>
+      <Header />
+      <main className='container'>
+        <div className='canvas-container'>
+          <div className='canvas'>
+            <canvas ref={drawerRef} />
+          </div>
+          <div className='canvas'>
+            <canvas ref={viewerRef} />
+          </div>
         </div>
-        <div className='canvas'>
-          <canvas ref={viewerRef} />
+        <div className='controls'>
+          <div>
+            <Swatches current={color} onChange={setColor} />
+          </div>
+          <div>
+            <Sizes current={strokeWidth} onChange={setStrokeWidth} />
+          </div>
+          <div>
+            <button className='reset-button' onClick={handleReset}>
+              Reset
+            </button>
+          </div>
         </div>
-      </div>
-      <div className='controls'>
-        <div>
-          <Swatches current={color} onChange={setColor} />
-        </div>
-        <div>
-          <Sizes current={strokeWidth} onChange={setStrokeWidth} />
-        </div>
-        <div>
-          <button className='reset-button' onClick={handleReset}>
-            Reset
-          </button>
-        </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };
