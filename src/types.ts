@@ -16,6 +16,7 @@ export interface RealtimeDrawerOptions {
 
 export interface RealtimeCommonHookOptions {
   reset: () => void;
+  dirty: boolean;
 }
 
 /* eslint-disable @typescript-eslint/no-empty-interface */

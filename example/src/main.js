@@ -12,7 +12,7 @@ const App = () => {
 
   const [viewerRef, onChange, { reset: resetViewer }] = useRealtimeViewer();
 
-  const [drawerRef, { reset: resetDrawer }] = useRealtimeDrawer({
+  const [drawerRef, { reset: resetDrawer, dirty }] = useRealtimeDrawer({
     color,
     strokeWidth,
     onChange,
@@ -23,6 +23,8 @@ const App = () => {
     resetViewer();
   }, [resetDrawer, resetViewer]);
 
+  console.log(dirty);
+
   return (
     <div className='app-container'>
       <Header />
@@ -30,6 +32,14 @@ const App = () => {
         <div className='canvas-container'>
           <div className='canvas'>
             <canvas ref={drawerRef} />
+            {!dirty && (
+              <span className='canvas-hint'>
+                Start drawing!{' '}
+                <span role='img' aria-label='paintbrush'>
+                  🖌
+                </span>
+              </span>
+            )}
           </div>
           <div className='canvas'>
             <canvas ref={viewerRef} />

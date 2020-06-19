@@ -8,6 +8,7 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = React.useState<CanvasRenderingContext2D | null>(null);
   const count = React.useRef<number>(0);
+  const [dirty, setDirty] = React.useState<boolean>(false);
 
   const handleApply = React.useCallback(() => {
     count.current = 0;
@@ -17,6 +18,10 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
 
   const handleDraw = React.useCallback(
     (payload: PointPayload[]): void => {
+      if (!dirty) {
+        setDirty(true);
+      }
+
       if (
         (payload.length === 1 && count.current === 0) ||
         payload.length < count.current
@@ -26,13 +31,14 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
         count.current = payload.length;
       }
     },
-    [applyStroke]
+    [applyStroke, dirty]
   );
 
   const drawToCanvas = useCanvasDraw({ ctx, onDraw: handleDraw });
 
   const handleReset = React.useCallback(() => {
     count.current = 0;
+    setDirty(false);
   }, []);
 
   const reset = useCanvasReset({ ref, ctx, onReset: handleReset });
@@ -70,5 +76,5 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
     }
   }, [ref, ctx]);
 
-  return [ref, drawToCanvas, { reset }];
+  return [ref, drawToCanvas, { reset, dirty }];
 };

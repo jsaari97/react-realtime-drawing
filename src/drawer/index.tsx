@@ -18,6 +18,7 @@ export const useRealtimeDrawer = ({
   const count = React.useRef<number>(0);
   const points = React.useRef<PointPayload[]>([]);
   const [ratio, setRatio] = React.useState<number>(0);
+  const [dirty, setDirty] = React.useState<boolean>(false);
 
   const [mouseDown, setMouseDown] = React.useState<boolean>(false);
 
@@ -67,6 +68,10 @@ export const useRealtimeDrawer = ({
 
           points.current.push(payload);
 
+          if (!dirty) {
+            setDirty(true);
+          }
+
           if (onChange) {
             onChange(points.current);
           }
@@ -75,7 +80,7 @@ export const useRealtimeDrawer = ({
         }
       }
     },
-    [ref, drawToCanvas, color, strokeWidth, onChange, ratio]
+    [ref, drawToCanvas, color, strokeWidth, onChange, ratio, dirty]
   );
 
   React.useEffect(() => {
@@ -147,9 +152,10 @@ export const useRealtimeDrawer = ({
   const handleReset = React.useCallback(() => {
     count.current = 0;
     points.current = [];
+    setDirty(false);
   }, []);
 
   const reset = useCanvasReset({ ref, ctx, onReset: handleReset });
 
-  return [ref, { reset }];
+  return [ref, { reset, dirty }];
 };
