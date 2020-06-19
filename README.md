@@ -1,11 +1,11 @@
 # React Realtime Draw
 
-React hooks for drawing and spectating in real time.
+React hooks for HTML canvas drawing and spectation in real time.
 
 ## Features
 
 - React hooks support :sparkles:
-- Mouse- and touch-support :computer_mouse::point_up_2:
+- Mouse and touch support :computer_mouse::point_up_2:
 - Brush color and size support :paintbrush:
 - Automatic canvas scaling :arrow_up_down:
 - Lightweight, under 2kB gzipped :rocket:
@@ -51,4 +51,4 @@ $ yarn add react-realtime-drawing
 
 ## License
 
-MIT © [jsaari97](https://github.com/jsaari97)
+MIT © [Jim Saari](https://github.com/jsaari97)
