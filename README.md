@@ -1,4 +1,4 @@
-# React Realtime Draw
+# React Realtime Drawing
 
 React hooks for HTML canvas drawing and spectation in real time.
 
