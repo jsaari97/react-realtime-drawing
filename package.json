@@ -1,6 +1,7 @@
 {
   "name": "react-realtime-drawing",
   "version": "0.1.0",
+  "homepage": "https://jsaari97.github.io/react-realtime-drawing",
   "description": "Realtime canvas drawing hooks for React",
   "author": "jsaari97",
   "license": "MIT",
