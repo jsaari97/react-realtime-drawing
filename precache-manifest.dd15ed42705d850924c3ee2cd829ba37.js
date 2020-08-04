@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9aef0e3a5e1e85e9c5ec64a8ac38ef8e",
+    "revision": "b00c1cf4257c05dcb94b62f06d710369",
     "url": "/react-realtime-drawing/index.html"
   },
   {
-    "revision": "a590b46ced74df5164c9",
+    "revision": "9e8b7502e33468adae9f",
     "url": "/react-realtime-drawing/static/css/main.86436881.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-realtime-drawing/static/js/2.9ee06be8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a590b46ced74df5164c9",
-    "url": "/react-realtime-drawing/static/js/main.2ba4cb32.chunk.js"
+    "revision": "9e8b7502e33468adae9f",
+    "url": "/react-realtime-drawing/static/js/main.9c6f9306.chunk.js"
   },
   {
     "revision": "2ef5ad12d468f0ae5a76",

@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-realtime-drawing/static/css/main.86436881.chunk.css",
-    "main.js": "/react-realtime-drawing/static/js/main.2ba4cb32.chunk.js",
-    "main.js.map": "/react-realtime-drawing/static/js/main.2ba4cb32.chunk.js.map",
+    "main.js": "/react-realtime-drawing/static/js/main.9c6f9306.chunk.js",
+    "main.js.map": "/react-realtime-drawing/static/js/main.9c6f9306.chunk.js.map",
     "runtime-main.js": "/react-realtime-drawing/static/js/runtime-main.ce763df9.js",
     "runtime-main.js.map": "/react-realtime-drawing/static/js/runtime-main.ce763df9.js.map",
     "static/js/2.9ee06be8.chunk.js": "/react-realtime-drawing/static/js/2.9ee06be8.chunk.js",
     "static/js/2.9ee06be8.chunk.js.map": "/react-realtime-drawing/static/js/2.9ee06be8.chunk.js.map",
     "index.html": "/react-realtime-drawing/index.html",
-    "precache-manifest.7bd67abe6d267e4f5e1d9fecbed76ccb.js": "/react-realtime-drawing/precache-manifest.7bd67abe6d267e4f5e1d9fecbed76ccb.js",
+    "precache-manifest.dd15ed42705d850924c3ee2cd829ba37.js": "/react-realtime-drawing/precache-manifest.dd15ed42705d850924c3ee2cd829ba37.js",
     "service-worker.js": "/react-realtime-drawing/service-worker.js",
     "static/css/main.86436881.chunk.css.map": "/react-realtime-drawing/static/css/main.86436881.chunk.css.map",
     "static/js/2.9ee06be8.chunk.js.LICENSE.txt": "/react-realtime-drawing/static/js/2.9ee06be8.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.ce763df9.js",
     "static/js/2.9ee06be8.chunk.js",
     "static/css/main.86436881.chunk.css",
-    "static/js/main.2ba4cb32.chunk.js"
+    "static/js/main.9c6f9306.chunk.js"
   ]
 }
