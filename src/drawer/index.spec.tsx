@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react'; // eslint-disable-line no-use-before-define
 import { useRealtimeDrawer } from '.';
 import { renderHook, HookResult } from '@testing-library/react-hooks';
 import { RealtimeDrawerValue } from '../types';
