@@ -34,7 +34,7 @@ const App = () => {
             <canvas ref={drawerRef} />
             {!dirty && (
               <span className='canvas-hint'>
-                Start drawing!{' '}
+                Start drawing!&nbsp;
                 <span role='img' aria-label='paintbrush'>
                   🖌
                 </span>
