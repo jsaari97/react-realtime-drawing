@@ -45,12 +45,8 @@ export const useRealtimeDrawer = ({
         count.current++;
 
         if (count.current % 1 === 0 || count.current < 2) {
-          const {
-            width,
-            height,
-            left,
-            top,
-          } = ref.current.getBoundingClientRect();
+          const { width, height, left, top } =
+            ref.current.getBoundingClientRect();
 
           // Get cursor coordinates from mouse or touch event
           const pageX =
@@ -95,10 +91,8 @@ export const useRealtimeDrawer = ({
       }
 
       // Setup
-      const {
-        width,
-        height,
-      } = ref.current.parentElement.getBoundingClientRect();
+      const { width, height } =
+        ref.current.parentElement.getBoundingClientRect();
 
       ref.current.parentElement.style.position = 'relative';
       ref.current.height = height;

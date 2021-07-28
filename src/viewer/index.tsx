@@ -55,10 +55,8 @@ export const useRealtimeViewer = (): RealtimeViewerValue => {
       }
 
       // Setup
-      const {
-        width,
-        height,
-      } = ref.current.parentElement.getBoundingClientRect();
+      const { width, height } =
+        ref.current.parentElement.getBoundingClientRect();
 
       ref.current.parentElement.style.position = 'relative';
       ref.current.height = height;
