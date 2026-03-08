@@ -44,6 +44,8 @@ export default tseslint.config(
       ...eslintConfigPrettier.rules,
       'space-before-function-paren': 'off',
       'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
       'react/jsx-handler-names': 'off',
       'react/jsx-fragments': 'off',
       'react/no-unused-prop-types': 'off',

@@ -34,17 +34,17 @@
     "test:lint": "eslint .",
     "test:unit": "vitest run",
     "test:watch": "vitest",
-    "predeploy": "cd example && npm install && npm run build",
+    "predeploy": "npm --prefix example ci && npm --prefix example run build",
     "deploy": "gh-pages -d example/dist"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/react-hooks": "^7.0.0",
-    "@types/react": "^17.0.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.4",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -55,8 +55,8 @@
     "jsdom": "^28.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.8.1",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "tsdown": "^0.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3",

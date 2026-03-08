@@ -1,9 +1,9 @@
 import React from 'react'; // eslint-disable-line no-use-before-define
 import { useRealtimeDrawer } from '.';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
-const wrapper: React.FC = ({ children }) => <div>{children}</div>;
+const wrapper = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
 
 describe('useRealtimeDrawer', () => {
   it('should return null if no ref handle', async () => {
@@ -15,7 +15,7 @@ describe('useRealtimeDrawer', () => {
   });
 
   it('should warn if no parent', async () => {
-    global.console.warn = vi.fn();
+    globalThis.console.warn = vi.fn();
 
     const { result } = renderHook(
       () => {
