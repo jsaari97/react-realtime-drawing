@@ -43,10 +43,6 @@ export default () => {
 
 ```bash
 $ npm install react-realtime-drawing
-
-# or using Yarn
-
-$ yarn add react-realtime-drawing
 ```
 
 ## License
