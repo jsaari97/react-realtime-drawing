@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-use-before-define
 import { useRealtimeDrawer } from '.';
 import { renderHook } from '@testing-library/react-hooks';
+import { vi } from 'vitest';
 
 const wrapper: React.FC = ({ children }) => <div>{children}</div>;
 
@@ -14,7 +15,7 @@ describe('useRealtimeDrawer', () => {
   });
 
   it('should warn if no parent', async () => {
-    global.console.warn = jest.fn();
+    global.console.warn = vi.fn();
 
     const { result } = renderHook(
       () => {
@@ -30,7 +31,7 @@ describe('useRealtimeDrawer', () => {
 
     const [ref] = result.current;
 
-    expect(console.warn).toBeCalled();
+    expect(console.warn).toHaveBeenCalled();
     expect(ref.current?.tagName).toEqual('CANVAS');
   });
 

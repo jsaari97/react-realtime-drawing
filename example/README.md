@@ -1,5 +1,9 @@
-This example was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This example uses [Vite](https://vite.dev/) and links to the parent
+`react-realtime-drawing` package with `file:..` for local development.
 
-It is linked to the react-realtime-drawing package in the parent directory for development purposes.
+Run:
 
-You can run `yarn install` and then `yarn start` to test your package.
+```bash
+npm install
+npm run start
+```

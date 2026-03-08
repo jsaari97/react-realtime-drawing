@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState, useCallback} from 'react';
 import './main.css';
 import { useRealtimeDrawer, useRealtimeViewer } from 'react-realtime-drawing';
 import { Swatches } from './components/swatches';
@@ -7,8 +7,8 @@ import { Footer } from './components/footer';
 import { Header } from './components/header';
 
 const App = () => {
-  const [color, setColor] = React.useState('#134e6f');
-  const [strokeWidth, setStrokeWidth] = React.useState(16);
+  const [color, setColor] = useState('#134e6f');
+  const [strokeWidth, setStrokeWidth] = useState(16);
 
   const [viewerRef, onChange, { reset: resetViewer }] = useRealtimeViewer();
 
@@ -18,12 +18,10 @@ const App = () => {
     onChange,
   });
 
-  const handleReset = React.useCallback(() => {
+  const handleReset = useCallback(() => {
     resetDrawer();
     resetViewer();
   }, [resetDrawer, resetViewer]);
-
-  console.log(dirty);
 
   return (
     <div className='app-container'>

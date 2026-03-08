@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 const colors = ['#134e6f', '#ff6150', '#1ac0c6'];
 
 export const Swatches = ({ current, onChange }) => {
@@ -22,15 +20,12 @@ export const Swatches = ({ current, onChange }) => {
 };
 
 const Swatch = ({ color, onClick, active }) => {
-  const handleClick = React.useCallback(() => {
-    onClick(color);
-  }, [onClick, color]);
 
   return (
     <button
       className={`swatch-button${active ? ' active' : ''}`}
       style={{ backgroundColor: color }}
-      onClick={handleClick}
+      onClick={() => onClick(color)}
       aria-label={`Select ${color} color`}
       title={`Select ${color} color`}
     />

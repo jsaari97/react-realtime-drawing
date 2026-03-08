@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 const sizes = [8, 16, 32];
 
 export const Sizes = ({ current, onChange }) => {
@@ -18,14 +16,10 @@ export const Sizes = ({ current, onChange }) => {
 };
 
 const Size = ({ size, onClick, active }) => {
-  const handleClick = React.useCallback(() => {
-    onClick(size);
-  }, [onClick, size]);
-
   return (
     <button
       className={`size-button${active ? ' active' : ''}`}
-      onClick={handleClick}
+      onClick={() => onClick(size)}
       aria-label={`Select  ${size}`}
       title={`Select size ${size}`}
     >
